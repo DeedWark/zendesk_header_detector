@@ -1,0 +1,10 @@
+[ZENDESK]
+email=youremail
+subdomain=yoursubdomain
+view_id=yourview_id
+author_id=yourauthor_id
+
+[HEADERS]
+header1=header1
+header2=header2
+header3=header3
