@@ -9,7 +9,7 @@ from zenpy.lib.api_objects import Comment, Ticket
 
 # CONFIG PARSER
 config = configparser.ConfigParser()
-config.read('config.txt')
+config.read('/app/config.txt')
 email = config.get('ZENDESK', 'email')
 subdomain = config.get('ZENDESK', 'subdomain')
 view_id = config.get('ZENDESK', 'view_id')
@@ -82,7 +82,7 @@ def HeaderDetecter(view_id):
 
 def main():
     while True:
-        HeaderDetecter()
+        HeaderDetecter(view_id)
         time.sleep(60)
 
 if __name__ == '__main__':
