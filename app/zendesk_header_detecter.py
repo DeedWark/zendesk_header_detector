@@ -7,23 +7,29 @@ from email.parser import Parser
 from zenpy import Zenpy
 from zenpy.lib.api_objects import Comment, Ticket
 
-# CONFIG PARSER
-config = configparser.ConfigParser()
-config.read('/app/config.txt')
-email = config.get('ZENDESK', 'email')
-subdomain = config.get('ZENDESK', 'subdomain')
-view_id = config.get('ZENDESK', 'view_id')
-view_id = int(view_id)
-author_id = config.get('ZENDESK', 'author_id')
-author_id = int(author_id)
-# ENV VAR
-token = os.environ.get('ZENDESK_TOKEN')
+def init_conf():
+    config = configparser.ConfigParser()
+    config.read('app/config.txt')
+    conf = {}
+    conf["email"] = config.get('ZENDESK', 'email')
+    conf["subdomain"] = config.get('ZENDESK', 'subdomain')
+    conf["view_id"] = int(config.get('ZENDESK', 'view_id'))
+    conf["author_id"] = int(config.get('ZENDESK', 'author_id'))
+    conf["token"] = os.environ.get('ZENDESK_TOKEN')
+    # Headers
+    conf["header1"] = config.get('HEADERS', 'header1')
+    conf["header2"] = config.get('HEADERS', 'header2')
+    conf["header3"] = config.get('HEADERS', 'header3')
+    return conf
+
+conf = init_conf()
 
 creds = {
-    'email': f"{email}",
-    'token': f"{token}",
-    'subdomain': f"{subdomain}"
+    'email': conf["email"],
+    'token': conf["token"],
+    'subdomain': conf["subdomain"]
 }
+
 zenpy = Zenpy(**creds)
 
 def HeaderDetecter(view_id):
@@ -31,6 +37,7 @@ def HeaderDetecter(view_id):
     ticket_list = zenpy.views.tickets(view=view_id)
     for ticket in ticket_list:
         ticket_id = ticket.id
+        print(ticket_id)
 
         """ GET ALL COMMENT, ALL ATTACHMENTS, CONTENT_TYPE, CONTENT, FILENAME """
         comment_list = zenpy.tickets.comments(ticket_id)
@@ -54,9 +61,9 @@ def HeaderDetecter(view_id):
                     headers = Parser().parsestr(email)
 
                     # Configparser
-                    header1 = config.get('HEADERS', 'header1')
-                    header2 = config.get('HEADERS', 'header2')
-                    header3 = config.get('HEADERS', 'header3')
+                    header1 = conf["header1"]
+                    header2 = conf["header2"]
+                    header3 = conf["header3"]
 
                     specific_header1 = headers[str(header1)]
                     specific_header2 = headers[str(header2)]
@@ -72,17 +79,18 @@ def HeaderDetecter(view_id):
                     ticket.comment = Comment(
                         body=comment,
                         public=False,
-                        author_id=author_id
+                        author_id=conf["author_id"]
                     )
                     ticket.tags.extend(['header_detected'])
                     zenpy.tickets.update(ticket)
+
                     print("Comment added in ticket: #{ticket_id}")
 
     return True
 
 def main():
     while True:
-        HeaderDetecter(view_id)
+        HeaderDetecter(conf["view_id"])
         time.sleep(60)
 
 if __name__ == '__main__':
