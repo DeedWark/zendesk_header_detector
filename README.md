@@ -4,7 +4,7 @@ Detect specific headers in attached EML/File in Zendesk ticket
 ## Launch
 !!! Don't forget to replace elements in app/config.txt
 ```bash
-python3 zendesk_header_detecter.py
+python3 app/zendesk_header_detecter.py
 ```
 
 ## Build
