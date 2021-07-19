@@ -5,7 +5,7 @@ Detect specific headers in attached EML/File in Zendesk ticket
 !!! Don't forget to replace elements in app/config.txt
 
 - zendesk email, zendesk subdomain, zendesk view_id, zendesk author_id, email header 1,2,3 = app/config.txt
-Example:
+> Example:
 ```
 [ZENDESK]
 email=user@email.com
@@ -19,7 +19,7 @@ header2=From
 header3=Return-Path
 ```
 - zendesk token = environment variable -> ZENDESK_TOKEN
-Example:
+> Example:
 ```bash
 export ZENDESK_TOKEN="1234567abcdef"
 ```
