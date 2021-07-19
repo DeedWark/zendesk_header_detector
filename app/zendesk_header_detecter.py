@@ -32,7 +32,7 @@ creds = {
 
 zenpy = Zenpy(**creds)
 
-def HeaderDetecter(view_id):
+def HeaderDetecter(view_id, author_id, header1, header2, header3):
     """ EXECUTE VIEW IN ORDER TO GET TICKET """
     ticket_list = zenpy.views.tickets(view=view_id)
     for ticket in ticket_list:
@@ -60,11 +60,6 @@ def HeaderDetecter(view_id):
                     # Parse EML content
                     headers = Parser().parsestr(email)
 
-                    # Configparser
-                    header1 = conf["header1"]
-                    header2 = conf["header2"]
-                    header3 = conf["header3"]
-
                     specific_header1 = headers[str(header1)]
                     specific_header2 = headers[str(header2)]
                     specific_header3 = headers[str(header3)]
@@ -90,7 +85,7 @@ def HeaderDetecter(view_id):
 
 def main():
     while True:
-        HeaderDetecter(conf["view_id"])
+        HeaderDetecter(conf["view_id"], conf["author_id"], header1["header1"], header2["header2"], header3["header3"])
         time.sleep(60)
 
 if __name__ == '__main__':
