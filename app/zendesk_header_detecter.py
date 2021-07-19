@@ -85,7 +85,7 @@ def HeaderDetecter(view_id, author_id, header1, header2, header3):
 
 def main():
     while True:
-        HeaderDetecter(conf["view_id"], conf["author_id"], header1["header1"], header2["header2"], header3["header3"])
+        HeaderDetecter(conf["view_id"], conf["author_id"], conf["header1"], conf["header2"], conf["header3"])
         time.sleep(60)
 
 if __name__ == '__main__':
