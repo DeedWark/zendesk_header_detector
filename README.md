@@ -1,4 +1,4 @@
-# zendesk_header_detecter
+# zendesk_header_detector
 Detect specific headers in attached EML/File in Zendesk ticket
 
 ## Init
@@ -26,18 +26,18 @@ export ZENDESK_TOKEN="1234567abcdef"
 ```
 
 ```bash
-python3 app/zendesk_header_detecter.py
+python3 app/zendesk_header_detector.py
 ```
 
 ## Docker
 - Build
 ```bash
-docker build --build-arg ZENDESK_TOKEN='<yourtoken>' -t zendesk_header_detecter .
+docker build --build-arg ZENDESK_TOKEN='<yourtoken>' -t zendesk_header_detector .
 # OR
 export ZENDESK_TOKEN='<yourtoken>'
 ```
 
 - Run
 ```bash
-docker run -d --name zendesk_header_detecter zendesk_header_detecter
+docker run -d --name zendesk_header_detector zendesk_header_detector
 ```
